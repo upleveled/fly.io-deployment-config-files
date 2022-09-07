@@ -1,11 +1,11 @@
 # fly.toml file generated for quiet-sun-5920 on 2022-08-30T13:08:16+02:00
 
-app = "upleveled-earth-planet"
+app = "app-name"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-# This block code should be commented out to setup postgres in the app
+# uncomment this code block on apps with postgres
 # [mounts]
 #  source = "postgres"
 #  destination = "/postgres-volume"
