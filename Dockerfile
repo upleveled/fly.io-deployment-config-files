@@ -35,5 +35,5 @@ COPY --from=builder /app ./
 
 ENV PORT 8080
 
-CMD ["yarn", "flypostbuild"]
-#CMD ["yarn", "start"]
+# CMD ["yarn", "flypostbuild"] // use flypostbuild on projects with database
+CMD ["yarn", "start"]
