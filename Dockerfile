@@ -35,5 +35,5 @@ COPY --from=builder /app ./
 
 ENV PORT 8080
 
-# CMD ["yarn", "flypostbuild"] // use flypostbuild on projects with postgres
+# CMD ["yarn", "fly-postbuild"] // use fly-postbuild instead of start on projects using postgres
 CMD ["yarn", "start"]
