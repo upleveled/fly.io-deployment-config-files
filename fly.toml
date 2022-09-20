@@ -5,7 +5,7 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-# Uncomment this code block on apps hosting postgres
+# Uncomment this code block on apps with a postgres volume
 #[mounts]
 #  source = "postgres"
 #  destination = "/postgres-volume"
