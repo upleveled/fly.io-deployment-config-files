@@ -34,6 +34,4 @@ RUN chmod +x /app/postgres-init.sh
 
 ENV PORT 8080
 
-# use fly-postbuild instead of start on projects using postgres
 CMD ["yarn", "fly-postbuild"]
-#CMD ["yarn", "start"]

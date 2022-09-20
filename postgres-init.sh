@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 if [ ! -d "../postgres-volume" ]
 then
@@ -8,8 +8,13 @@ then
   echo "host all all 0.0.0.0/0 trust" >> /run/postgresql/data/pg_hba.conf
   echo "listen_addresses='*'" >> /run/postgresql/data/postgresql.conf
   su postgres -c "pg_ctl start -D /run/postgresql/data"
-  psql -U postgres postgres --command="CREATE USER upleveled PASSWORD 'upleveled'"
-  createdb -U postgres --owner=upleveled upleveled
+  psql -U postgres postgres --command="CREATE USER $PGUSERNAME PASSWORD '$PGPASSWORD'"
+  createdb -U postgres --owner=$PGUSERNAME $PGDATABASE
 else
-  su postgres -c 'pg_ctl start -D /postgres-volume/data'
+  mkdir /postgres-volume/data /postgres-volume/run
+  chown postgres:postgres /postgres-volume/data /postgres-volume/run
+  [ ! -f /postgres-volume/data/postgresql.conf ] && su postgres -c "initdb -D /postgres-volume/data"
+  sed -i 's/run\/postgresql/postgres-volume\/run/g' /postgres-volume/data/postgresql.conf
+  grep -qxF "listen_addresses='*'" /postgres-volume/data/postgresql.conf || echo "listen_addresses='*'" >> /postgres-volume/data/postgresql.conf
+  [ ! -f /postgres-volume/data/postmaster.pid ] && su postgres -c "pg_ctl start -D /postgres-volume/data" || su postgres -c "pg_ctl restart -D /postgres-volume/data"
 fi
